@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),PatientDoctorSelectionActivity.class));
 
             }
-        },3000);
+        },2000);
 
 
     }
