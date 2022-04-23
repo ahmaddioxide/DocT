@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/appbackground"
+    android:background="@drawable/app_background2"
     tools:context=".MainActivity">
 
 
@@ -12,11 +12,11 @@
         android:id="@+id/animationView"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        app:lottie_autoPlay="true"
         android:layout_centerHorizontal="true"
-        app:lottie_loop="true"
         android:layout_marginTop="150dp"
-        app:lottie_fileName="animation.json"/>
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="animation.json"
+        app:lottie_loop="true" />
 
     <ImageView
         android:id="@+id/LogoView"
@@ -25,8 +25,7 @@
         android:layout_below="@+id/animationView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:textStyle="bold"
         android:src="@drawable/doct_iconbig"
-        />
+        android:textStyle="bold" />
 
 </RelativeLayout>

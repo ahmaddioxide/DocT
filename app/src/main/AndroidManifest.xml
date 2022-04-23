@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DocT">
         <activity
+            android:name=".DoctorSignInActivity"
+            android:exported="false" />
+        <activity
             android:name=".PatientDoctorSelectionActivity"
             android:exported="false" />
         <activity
