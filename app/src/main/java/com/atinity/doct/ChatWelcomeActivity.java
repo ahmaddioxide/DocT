@@ -6,18 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-public class MainActivity extends AppCompatActivity {
+public class ChatWelcomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_chat_welcome);
 
         new Handler().postDelayed(() -> {
             // This method will be executed once the timer is over
-            Intent i = new Intent(MainActivity.this, ChatWelcomeActivity.class);
+            Intent i = new Intent(ChatWelcomeActivity.this, HomeChatActivity.class);
             startActivity(i);
             finish();
-        }, 3500);
+        }, 5000);
     }
 }
