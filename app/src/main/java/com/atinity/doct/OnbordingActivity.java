@@ -19,7 +19,7 @@
     import androidx.viewpager.widget.PagerAdapter;
     import androidx.viewpager.widget.ViewPager;
 
-    public class WelcomeActivity extends AppCompatActivity {
+    public class OnbordingActivity extends AppCompatActivity {
 //https://www.youtube.com/watch?v=GffXwcH2-g8&ab_channel=SmallAcademy
         private ViewPager viewPager;
         private MyViewPagerAdapter myViewPagerAdapter;
@@ -27,16 +27,15 @@
         private TextView[] dots;
         private int[] layouts;
         private Button btnSkip, btnNext;
-        private PrefManager prefManager;
+        private SharedPreferenceManagerForFirstStart sharedPreferenceManagerForFirstStart;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            //requestWindowFeature(Window.FEATURE_NO_TITLE);
-           //getSupportActionBar().hide();
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
             // Checking for first time launch - before calling setContentView()
-            prefManager = new PrefManager(this);
-            if (!prefManager.isFirstTimeLaunch()) {
+            sharedPreferenceManagerForFirstStart = new SharedPreferenceManagerForFirstStart(this);
+            if (!sharedPreferenceManagerForFirstStart.isFirstTimeLaunch()) {
                 launchHomeScreen();
                 finish();
             }
@@ -116,8 +115,8 @@
         }
 
         private void launchHomeScreen() {
-            prefManager.setFirstTimeLaunch(false);
-            startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+            sharedPreferenceManagerForFirstStart.setFirstTimeLaunch(false);
+            startActivity(new Intent(OnbordingActivity.this, SplashScreen.class));
             finish();
         }
 

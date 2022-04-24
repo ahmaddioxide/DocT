@@ -10,8 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DocT">
         <activity
-            android:name=".WelcomeActivity"
-            android:exported="true" >
+            android:name=".SignupLogin.PatientLoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OnbordingActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,13 +23,12 @@
         </activity>
         <activity
             android:name=".PatientDoctorSelectionActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
             </intent-filter>
         </activity>
 
