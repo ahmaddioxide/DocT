@@ -21,7 +21,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class OnboardingActivity extends AppCompatActivity {
+public class CarouselActivity_1 extends AppCompatActivity {
     //https://www.youtube.com/watch?v=GffXwcH2-g8&ab_channel=SmallAcademy
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
@@ -29,7 +29,7 @@ public class OnboardingActivity extends AppCompatActivity {
     private TextView[] dots;
     private int[] layouts;
     private Button btnSkip, btnNext;
-    private SharedPreferenceManagerForFirstStart sharedPreferenceManagerForFirstStart;
+    private SP_FirstStartManager SPFirstStartManager;
     FirebaseAuth auth;
 
     @Override
@@ -37,15 +37,15 @@ public class OnboardingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         // Checking for first time launch - before calling setContentView()
-        sharedPreferenceManagerForFirstStart = new SharedPreferenceManagerForFirstStart(this);
-        if (!sharedPreferenceManagerForFirstStart.isFirstTimeLaunch()) {
+        SPFirstStartManager = new SP_FirstStartManager(this);
+        if (!SPFirstStartManager.isFirstTimeLaunch()) {
             launchHomeScreen();
             finish();
         }
         // btnNext.setBackgroundColor(btnNext.getContext().getResources().getColor(R.color.buttonColor));
 
 
-        setContentView(R.layout.activity_welcome);
+        setContentView(R.layout.activity_carousel_1);
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
@@ -121,14 +121,14 @@ public class OnboardingActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        sharedPreferenceManagerForFirstStart.setFirstTimeLaunch(false);
+        SPFirstStartManager.setFirstTimeLaunch(false);
         /////
 
         if (auth.getCurrentUser() == null) {
-            startActivity(new Intent(OnboardingActivity.this, PatientDoctorSelectionActivity.class));
+            startActivity(new Intent(CarouselActivity_1.this, P_D_Select_Activity_2.class));
             finish();
         } else {
-            startActivity(new Intent(OnboardingActivity.this, HomeChatActivity.class));
+            startActivity(new Intent(CarouselActivity_1.this, HomeActivity_5.class));
             finish();
         }
     }

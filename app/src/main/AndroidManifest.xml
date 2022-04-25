@@ -11,7 +11,7 @@
         android:theme="@style/Theme.DocT"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".OnboardingActivity"
+            android:name=".CarouselActivity_1"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,19 +20,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".LoginActivity_4"
             android:exported="false" />
         <activity
-            android:name=".RegistrationOrSignupActivity"
+            android:name=".SignupActivity_3"
             android:exported="false" />
         <activity
-            android:name=".HomeChatActivity"
+            android:name=".HomeActivity_5"
             android:exported="false" />
         <activity
             android:name=".ChatWelcomeActivity"
             android:exported="false" />
         <activity
-            android:name=".PatientDoctorSelectionActivity"
+            android:name=".P_D_Select_Activity_2"
             android:exported="false" />
 
         <meta-data

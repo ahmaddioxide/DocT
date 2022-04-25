@@ -4,12 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +19,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -28,7 +27,7 @@ import com.google.firebase.storage.UploadTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class RegistrationOrSignupActivity extends AppCompatActivity {
+public class SignupActivity_3 extends AppCompatActivity {
 
     TextView txt_sign_in, btn_signUp;
     CircleImageView profile_image;
@@ -46,7 +45,8 @@ public class RegistrationOrSignupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration_or_signup);
+        setContentView(R.layout.activity_signup_3);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         txt_sign_in = findViewById(R.id.txt_signin);
         btn_signUp = findViewById(R.id.btn_signUp);
@@ -79,13 +79,13 @@ public class RegistrationOrSignupActivity extends AppCompatActivity {
 
                 if(TextUtils.isEmpty(name) || TextUtils.isEmpty(email) ||
                         TextUtils.isEmpty(password) || TextUtils.isEmpty(cPassword)) {
-                    Toast.makeText(RegistrationOrSignupActivity.this, "Enter valid Data", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignupActivity_3.this, "Enter valid Data", Toast.LENGTH_SHORT).show();
                 } else if(!email.matches(emailPattern)) {
                     reg_email.setError("Invalid Email");
-                    Toast.makeText(RegistrationOrSignupActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignupActivity_3.this, "Invalid Email", Toast.LENGTH_SHORT).show();
                 } else if(password.length() < 6 || !password.equals(cPassword)) {
                     reg_pass.setError("Invalid Password");
-                    Toast.makeText(RegistrationOrSignupActivity.this, "Password is too short or\n Password not Matched", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignupActivity_3.this, "Password is too short or\n Password not Matched", Toast.LENGTH_SHORT).show();
                 } else {
                     auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -93,7 +93,7 @@ public class RegistrationOrSignupActivity extends AppCompatActivity {
 
                             if(task.isSuccessful()) {
 
-                                Toast.makeText(RegistrationOrSignupActivity.this, "User is created", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignupActivity_3.this, "User is created", Toast.LENGTH_SHORT).show();
 
                                 DatabaseReference reference = database.getReference().child("user").child(auth.getUid());
                                 StorageReference storageReference = storage.getReference().child("upload").child(auth.getUid());
@@ -112,10 +112,10 @@ public class RegistrationOrSignupActivity extends AppCompatActivity {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
                                                                 if(task.isSuccessful()) {
-                                                                    Intent i = new Intent(RegistrationOrSignupActivity.this, HomeChatActivity.class);
+                                                                    Intent i = new Intent(SignupActivity_3.this, HomeActivity_5.class);
                                                                     startActivity(i);
                                                                 } else {
-                                                                    Toast.makeText(RegistrationOrSignupActivity.this, "Error in Creating User", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(SignupActivity_3.this, "Error in Creating User", Toast.LENGTH_SHORT).show();
                                                                 }
                                                             }
                                                         });
@@ -131,10 +131,10 @@ public class RegistrationOrSignupActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()) {
-                                                Intent i = new Intent(RegistrationOrSignupActivity.this, HomeChatActivity.class);
+                                                Intent i = new Intent(SignupActivity_3.this, HomeActivity_5.class);
                                                 startActivity(i);
                                             } else {
-                                                Toast.makeText(RegistrationOrSignupActivity.this, "Error in Creating User", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(SignupActivity_3.this, "Error in Creating User", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });
@@ -142,7 +142,7 @@ public class RegistrationOrSignupActivity extends AppCompatActivity {
 
                             } else {
 
-                                Toast.makeText(RegistrationOrSignupActivity.this, "Something wrong", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignupActivity_3.this, "Something wrong", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -163,7 +163,7 @@ public class RegistrationOrSignupActivity extends AppCompatActivity {
         txt_sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(RegistrationOrSignupActivity.this, LoginActivity.class);
+                Intent i = new Intent(SignupActivity_3.this, LoginActivity_4.class);
                 startActivity(i);
             }
         });

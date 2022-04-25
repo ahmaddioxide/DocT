@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 /**
  * Created by Lincoln on 05/05/16.
  */
-public class SharedPreferenceManagerForFirstStart {
+public class SP_FirstStartManager {
     SharedPreferences pref;
     SharedPreferences.Editor editor;
     Context _context;
@@ -19,7 +19,7 @@ public class SharedPreferenceManagerForFirstStart {
 
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
 
-    public SharedPreferenceManagerForFirstStart(Context context) {
+    public SP_FirstStartManager(Context context) {
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
