@@ -20,16 +20,14 @@ public class PatientDoctorSelectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_doctor_selection);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        auth = FirebaseAuth.getInstance();
+
     }
 
     public void startPatientLoginAvtivity(View view)
     {
-        auth = FirebaseAuth.getInstance();
 
-        if(auth.getCurrentUser() == null) {
             startActivity(new Intent(getApplicationContext(), RegistrationOrSignupActivity.class));
-        }
-
     }
 }

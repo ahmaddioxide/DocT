@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class OnboardingActivity extends AppCompatActivity {
     //https://www.youtube.com/watch?v=GffXwcH2-g8&ab_channel=SmallAcademy
     private ViewPager viewPager;
@@ -28,6 +30,7 @@ public class OnboardingActivity extends AppCompatActivity {
     private int[] layouts;
     private Button btnSkip, btnNext;
     private SharedPreferenceManagerForFirstStart sharedPreferenceManagerForFirstStart;
+    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,9 +118,19 @@ public class OnboardingActivity extends AppCompatActivity {
     }
 
     private void launchHomeScreen() {
+
+        auth = FirebaseAuth.getInstance();
+
         sharedPreferenceManagerForFirstStart.setFirstTimeLaunch(false);
-        startActivity(new Intent(OnboardingActivity.this, PatientDoctorSelectionActivity.class));
-        finish();
+        /////
+
+        if (auth.getCurrentUser() == null) {
+            startActivity(new Intent(OnboardingActivity.this, PatientDoctorSelectionActivity.class));
+            finish();
+        } else {
+            startActivity(new Intent(OnboardingActivity.this, HomeChatActivity.class));
+            finish();
+        }
     }
 
     //  viewpager change listener
