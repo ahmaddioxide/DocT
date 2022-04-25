@@ -91,17 +91,9 @@ public class RegistrationOrSignupActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
-//                            if(!task.isSuccessful()){
-//                                FirebaseAuthException e = (FirebaseAuthException )task.getException();
-//                                Toast.makeText(RegistrationOrSignupActivity.this, "Failed Registration: "+e.getMessage(), Toast.LENGTH_SHORT).show();
-////                                message.hide();
-//                                return;
-
-                                                        if(task.isSuccessful()) {
+                            if(task.isSuccessful()) {
 
                                 Toast.makeText(RegistrationOrSignupActivity.this, "User is created", Toast.LENGTH_SHORT).show();
-
-                                System.out.print("user in created n we are in");
 
                                 DatabaseReference reference = database.getReference().child("user").child(auth.getUid());
                                 StorageReference storageReference = storage.getReference().child("upload").child(auth.getUid());
