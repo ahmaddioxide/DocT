@@ -28,5 +28,7 @@ public class P_D_Select_Activity_2 extends AppCompatActivity {
     {
 
             startActivity(new Intent(getApplicationContext(), SignupActivity_3.class));
+             finish();
+
     }
 }

@@ -3,11 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ahmad/AndroidStudioProjects/DocT/app/src/main/res/drawable-v24/general_back_button.xml" value="0.1825" />
+        <entry key="..\:/Users/ahmad/AndroidStudioProjects/DocT/app/src/main/res/drawable-v24/lock_icon.xml" value="0.1825" />
+        <entry key="..\:/Users/ahmad/AndroidStudioProjects/DocT/app/src/main/res/layout/activity_carousel_1.xml" value="0.22395833333333334" />
         <entry key="..\:/Users/ahmad/AndroidStudioProjects/DocT/app/src/main/res/layout/activity_chat_welcome.xml" value="0.23229166666666667" />
+        <entry key="..\:/Users/ahmad/AndroidStudioProjects/DocT/app/src/main/res/layout/activity_home_5.xml" value="0.22395833333333334" />
         <entry key="..\:/Users/ahmad/AndroidStudioProjects/DocT/app/src/main/res/layout/activity_home_chat.xml" value="0.23229166666666667" />
+        <entry key="..\:/Users/ahmad/AndroidStudioProjects/DocT/app/src/main/res/layout/activity_login_4.xml" value="0.22395833333333334" />
         <entry key="..\:/Users/ahmad/AndroidStudioProjects/DocT/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/ahmad/AndroidStudioProjects/DocT/app/src/main/res/layout/activity_p_d_selection_2.xml" value="0.22395833333333334" />
         <entry key="..\:/Users/ahmad/AndroidStudioProjects/DocT/app/src/main/res/layout/activity_patient_doctor_selection.xml" value="0.23229166666666667" />
         <entry key="..\:/Users/ahmad/AndroidStudioProjects/DocT/app/src/main/res/layout/activity_registration_or_signup.xml" value="0.23229166666666667" />
+        <entry key="..\:/Users/ahmad/AndroidStudioProjects/DocT/app/src/main/res/layout/activity_signup_3.xml" value="0.22395833333333334" />
+        <entry key="..\:/Users/ahmad/AndroidStudioProjects/DocT/app/src/main/res/layout/activity_splash_0.xml" value="0.22395833333333334" />
         <entry key="..\:/Users/ahmad/AndroidStudioProjects/DocT/app/src/main/res/layout/activity_welcome.xml" value="0.23229166666666667" />
         <entry key="..\:/Users/ahmad/AndroidStudioProjects/DocT/app/src/main/res/layout/slider1.xml" value="0.23229166666666667" />
         <entry key="..\:/Users/ahmad/AndroidStudioProjects/DocT/app/src/main/res/layout/slider3.xml" value="0.23229166666666667" />

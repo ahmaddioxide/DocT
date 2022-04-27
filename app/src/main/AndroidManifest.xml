@@ -12,12 +12,8 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".CarouselActivity_1"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="false" >
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".LoginActivity_4"
@@ -29,8 +25,14 @@
             android:name=".HomeActivity_5"
             android:exported="false" />
         <activity
-            android:name=".ChatWelcomeActivity"
-            android:exported="false" />
+            android:name=".SplashActivity_0"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".P_D_Select_Activity_2"
             android:exported="false" />

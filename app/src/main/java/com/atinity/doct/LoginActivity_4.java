@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ public class LoginActivity_4 extends AppCompatActivity {
     TextView txt_signup;
     EditText login_email, login_password;
     TextView signIn_btn;
+    ImageView back_btn;
     FirebaseAuth auth;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
@@ -37,6 +39,7 @@ public class LoginActivity_4 extends AppCompatActivity {
         signIn_btn = findViewById(R.id.signin_btn);
         login_email = findViewById(R.id.login_email);
         login_password = findViewById(R.id.login_password);
+        back_btn=findViewById(R.id.login_back_button);
 
         signIn_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +76,12 @@ public class LoginActivity_4 extends AppCompatActivity {
 
 
         txt_signup.setOnClickListener(view -> startActivity(new Intent(LoginActivity_4.this, SignupActivity_3.class)));
-
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),SignupActivity_3.class));
+                finish();
+            }
+        });
     }
 }

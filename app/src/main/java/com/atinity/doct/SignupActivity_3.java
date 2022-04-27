@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class SignupActivity_3 extends AppCompatActivity {
     TextView txt_sign_in, btn_signUp;
     CircleImageView profile_image;
     EditText reg_name, reg_email, reg_pass, reg_cPass;
+    ImageView back_btn;
     FirebaseAuth auth;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     Uri imageUri;
@@ -55,6 +57,8 @@ public class SignupActivity_3 extends AppCompatActivity {
         reg_pass = findViewById(R.id.reg_pass);
         reg_email = findViewById(R.id.reg_email);
         reg_cPass = findViewById(R.id.reg_cPass);
+        back_btn=findViewById(R.id.login_back_button);
+
 
         auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -64,6 +68,15 @@ public class SignupActivity_3 extends AppCompatActivity {
 //        progressDialog.setMessage("Please Wait...");
 //        progressDialog.setCancelable(false);
 
+
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),P_D_Select_Activity_2.class));
+                finish();
+
+            }
+        });
 
         btn_signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +127,8 @@ public class SignupActivity_3 extends AppCompatActivity {
                                                                 if(task.isSuccessful()) {
                                                                     Intent i = new Intent(SignupActivity_3.this, HomeActivity_5.class);
                                                                     startActivity(i);
+                                                                    finish();
+
                                                                 } else {
                                                                     Toast.makeText(SignupActivity_3.this, "Error in Creating User", Toast.LENGTH_SHORT).show();
                                                                 }
@@ -133,6 +148,9 @@ public class SignupActivity_3 extends AppCompatActivity {
                                             if(task.isSuccessful()) {
                                                 Intent i = new Intent(SignupActivity_3.this, HomeActivity_5.class);
                                                 startActivity(i);
+                                                finish();
+
+
                                             } else {
                                                 Toast.makeText(SignupActivity_3.this, "Error in Creating User", Toast.LENGTH_SHORT).show();
                                             }

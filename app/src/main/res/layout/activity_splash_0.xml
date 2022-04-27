@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatWelcomeActivity"
+    android:background="@color/white"
+    tools:context=".SplashActivity_0"
     >
 <!--    android:background="@color/primary_light_blue"-->
     <!--  on line no. 8 Giving light blue color to background and color
     is set in values/colors by me sheri as a default-->
 
-    <!--  Giving main logo (named logo.png) for ChatWelcomeActivity part of chat in drawable
+    <!--  Giving main logo (named logo.png) for SplashActivity_0 part of chat in drawable
      by making new directory so logo pixels don't fucked up-->
 
     <LinearLayout
@@ -39,7 +40,7 @@
             android:layout_margin="@dimen/_10sdp"
             android:fontFamily="@font/spartan_bold"
             android:gravity="center"
-            android:text="@string/doc_t_chat"
+            android:text="@string/app_name"
             android:textColor="#616161"
             android:textSize="@dimen/_25sdp" />
 
