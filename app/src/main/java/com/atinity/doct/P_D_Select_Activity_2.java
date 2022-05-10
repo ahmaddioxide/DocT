@@ -9,8 +9,6 @@ import android.view.WindowManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-//import com.atinity.doct.SignupLogin.PatientLoginActivity;
-
 public class P_D_Select_Activity_2 extends AppCompatActivity {
 
     FirebaseAuth auth;
@@ -24,7 +22,7 @@ public class P_D_Select_Activity_2 extends AppCompatActivity {
 
     }
 
-    public void startPatientLoginAvtivity(View view)
+    public void startPatientLoginActivity(View view)
     {
 
             startActivity(new Intent(getApplicationContext(), SignupActivity_3.class));

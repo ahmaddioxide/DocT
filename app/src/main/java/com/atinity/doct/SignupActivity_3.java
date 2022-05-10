@@ -1,6 +1,5 @@
 package com.atinity.doct;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,23 +7,19 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -34,15 +29,15 @@ public class SignupActivity_3 extends AppCompatActivity {
     CircleImageView profile_image;
     EditText reg_name, reg_email, reg_pass, reg_cPass;
     ImageView back_btn;
+
     FirebaseAuth auth;
-    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     Uri imageUri;
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     FirebaseDatabase database;
     FirebaseStorage storage;
 
-    String imageURI;
-//    ProgressDialog progressDialog;
+    String imageURI; // store the uri/url value of image that we get from firebase storage when we store that image
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,141 +47,124 @@ public class SignupActivity_3 extends AppCompatActivity {
 
         txt_sign_in = findViewById(R.id.txt_signin);
         btn_signUp = findViewById(R.id.btn_signUp);
-        profile_image = findViewById(R.id.profile_image);
-        reg_name = findViewById(R.id.reg_name);
-        reg_pass = findViewById(R.id.reg_pass);
-        reg_email = findViewById(R.id.reg_email);
-        reg_cPass = findViewById(R.id.reg_cPass);
-        back_btn=findViewById(R.id.login_back_button);
 
+        reg_name = findViewById(R.id.reg_name);
+        reg_email = findViewById(R.id.reg_email);
+        reg_pass = findViewById(R.id.reg_pass);
+        reg_cPass = findViewById(R.id.reg_cPass);
+        profile_image = findViewById(R.id.profile_image);
+
+        back_btn = findViewById(R.id.login_back_button);
 
         auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         database = FirebaseDatabase.getInstance();
 
-//        progressDialog = new ProgressDialog(this);
-//        progressDialog.setMessage("Please Wait...");
-//        progressDialog.setCancelable(false);
-
-
-        back_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),P_D_Select_Activity_2.class));
-                finish();
-
-            }
+        back_btn.setOnClickListener(view -> {
+            startActivity(new Intent(getApplicationContext(),P_D_Select_Activity_2.class));
+            finish();
         });
 
-        btn_signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btn_signUp.setOnClickListener(view -> {
 
-//                progressDialog.show();
-
-                String name = reg_name.getText().toString();
-                String email = reg_email.getText().toString();
-                String password = reg_pass.getText().toString();
-                String cPassword = reg_cPass.getText().toString();
+            String name = reg_name.getText().toString();
+            String email = reg_email.getText().toString();
+            String password = reg_pass.getText().toString();
+            String cPassword = reg_cPass.getText().toString();
+            String status = "Hey there You need help!";
 
 
-                if(TextUtils.isEmpty(name) || TextUtils.isEmpty(email) ||
-                        TextUtils.isEmpty(password) || TextUtils.isEmpty(cPassword)) {
-                    Toast.makeText(SignupActivity_3.this, "Enter valid Data", Toast.LENGTH_SHORT).show();
-                } else if(!email.matches(emailPattern)) {
-                    reg_email.setError("Invalid Email");
-                    Toast.makeText(SignupActivity_3.this, "Invalid Email", Toast.LENGTH_SHORT).show();
-                } else if(password.length() < 6 || !password.equals(cPassword)) {
-                    reg_pass.setError("Invalid Password");
-                    Toast.makeText(SignupActivity_3.this, "Password is too short or\n Password not Matched", Toast.LENGTH_SHORT).show();
-                } else {
-                    auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
+            if(TextUtils.isEmpty(name) || TextUtils.isEmpty(email) ||
+                    TextUtils.isEmpty(password) || TextUtils.isEmpty(cPassword)) {
+                Toast.makeText(SignupActivity_3.this, "Enter valid Data", Toast.LENGTH_SHORT).show();
+            } else if(!email.matches(emailPattern)) {
+                reg_email.setError("Invalid Email");
+                Toast.makeText(SignupActivity_3.this, "Invalid Email", Toast.LENGTH_SHORT).show();
+            } else if(password.length() < 6 || !password.equals(cPassword)) {
+                reg_pass.setError("Invalid Password");
+                Toast.makeText(SignupActivity_3.this, "Password is too short or\n Password not Matched", Toast.LENGTH_SHORT).show();
+            } else {
+                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
 
-                            if(task.isSuccessful()) {
+                    if(task.isSuccessful()) {
 
-                                Toast.makeText(SignupActivity_3.this, "User is created", Toast.LENGTH_SHORT).show();
+                    // storing data in database if, user input data is valid
+                        // here after child("user"), we make anOther child {(child(auth.getUid()))}, for authentication id
+                        DatabaseReference reference = database.getReference().child("user").child(Objects.requireNonNull(auth.getUid()));
+                        StorageReference storageReference = storage.getReference().child("upload").child(auth.getUid());
 
-                                DatabaseReference reference = database.getReference().child("user").child(auth.getUid());
-                                StorageReference storageReference = storage.getReference().child("upload").child(auth.getUid());
+                        // this code is to check, whether the user select image from the gallery or not
 
-                                if(imageUri != null) {
-                                    storageReference.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                                            if(task.isSuccessful()) {
-                                                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                                    @Override
-                                                    public void onSuccess(Uri uri) {
-                                                        imageURI = uri.toString();
-                                                        Users users = new Users(auth.getUid(), email, name, imageURI);
-                                                        reference.setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                if(task.isSuccessful()) {
-                                                                    Intent i = new Intent(SignupActivity_3.this, HomeActivity_5.class);
-                                                                    startActivity(i);
-                                                                    finish();
+                        if(imageUri != null) {
+                            // and if user selected the image, then we store the image into StorageReference (Firebase Storage)
+                            storageReference.putFile(imageUri).addOnCompleteListener(task1 -> {
 
-                                                                } else {
-                                                                    Toast.makeText(SignupActivity_3.this, "Error in Creating User", Toast.LENGTH_SHORT).show();
-                                                                }
-                                                            }
-                                                        });
-                                                    }
-                                                });
-                                            }
-                                        }
-                                    });
-                                } else {
-                                    imageURI = "https://firebasestorage.googleapis.com/v0/b/doct-8e8d5.appspot.com/o/female_doctor_avatar.png?alt=media&token=40d3bf94-5ea7-4ad0-b782-26e39f7f2c5e";
-                                    Users users = new Users(auth.getUid(), email, name, imageURI);
-                                    reference.setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful()) {
+                                if(task1.isSuccessful()) {
+                                    // if image is stored successfully, then we need the URL of image that we have stored
+                                    // and added addOnSuccessListener here, gives us the URL value
+                                    storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
+
+                                        imageURI = uri.toString();
+                                        Users users = new Users(name, email, imageURI, auth.getUid(), status);
+                                        // now we add the users into reference (realtime database) after checking all the inputs and converting them
+                                        reference.setValue(users).addOnCompleteListener(task11 -> {
+
+                                            if(task11.isSuccessful()) {
                                                 Intent i = new Intent(SignupActivity_3.this, HomeActivity_5.class);
                                                 startActivity(i);
                                                 finish();
-
-
-                                            } else {
-                                                Toast.makeText(SignupActivity_3.this, "Error in Creating User", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
+                                            } else { Toast.makeText(SignupActivity_3.this, "Error in Creating User", Toast.LENGTH_SHORT).show(); }
+                                        });
                                     });
                                 }
+                            });
+                        } else {
+                            String status1 = "Hey there You need help!";
+                            imageURI = "https://firebasestorage.googleapis.com/v0/b/doct-8e8d5.appspot.com/o/female_doctor_avatar.png?alt=media&token=40d3bf94-5ea7-4ad0-b782-26e39f7f2c5e";
+                            Users users = new Users(name, email, imageURI, auth.getUid(), status1);
+                            reference.setValue(users).addOnCompleteListener(task12 -> {
+                                if(task12.isSuccessful()) {
 
-                            } else {
+//                                        Log.d(name, "This is my name");
+//                                        Log.d(email, "This is my email");
+//                                        Log.d(imageURI, "This is my imageURI");
+//                                        Log.d(auth.getUid(), "This is my getAuth");
+//                                        Log.d(status, "This is my status");
 
-                                Toast.makeText(SignupActivity_3.this, "Something wrong", Toast.LENGTH_SHORT).show();
-                            }
+                                    Intent i = new Intent(SignupActivity_3.this, HomeActivity_5.class);
+                                    startActivity(i);
+                                    finish();
+
+                                } else {
+                                    Toast.makeText(SignupActivity_3.this, "Error in Creating User", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
-                    });
-                }
+
+                    } else {
+
+                        Toast.makeText(SignupActivity_3.this, "Something wrong", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
-        profile_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 10);
-            }
+        // to open gallery of phone, and select image
+        profile_image.setOnClickListener(view -> {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), 10);
         });
 
-        txt_sign_in.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(SignupActivity_3.this, LoginActivity_4.class);
-                startActivity(i);
-            }
+        txt_sign_in.setOnClickListener(view -> {
+            Intent i = new Intent(SignupActivity_3.this, LoginActivity_4.class);
+            startActivity(i);
         });
     }
 
+    // after selecting image, code get into this function, and check the request code
+    // and any value (image) is present or not.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -199,3 +177,4 @@ public class SignupActivity_3 extends AppCompatActivity {
         }
     }
 }
+

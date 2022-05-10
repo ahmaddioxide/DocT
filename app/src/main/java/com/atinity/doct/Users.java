@@ -6,19 +6,27 @@ public class Users {
     String email;
     String imageUrl;
     String uid;
+    String status;
 
-    public Users() {
-    }
 
-    public Users(String name, String email, String imageUrl, String uid) {
-        this.name = name;
-        this.email = email;
-        this.imageUrl = imageUrl;
-        this.uid = uid;
+    public Users() { }
+
+    public Users(String n, String e, String i, String id, String s) {
+//        this.name = name;
+//        this.email = email;
+//        this.imageUrl = imageUrl;
+//        this.uid = uid;
+//        this.status = status;
+
+        this.name = n;
+        this.email = e;
+        this.imageUrl = i;
+        this.uid = id;
+        this.status = s;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -26,7 +34,7 @@ public class Users {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -34,7 +42,7 @@ public class Users {
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        return this.imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
@@ -42,10 +50,18 @@ public class Users {
     }
 
     public String getUid() {
-        return uid;
+        return this.uid;
     }
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

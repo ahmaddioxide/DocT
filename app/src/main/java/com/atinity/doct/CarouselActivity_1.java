@@ -3,7 +3,6 @@ package com.atinity.doct;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -24,9 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class CarouselActivity_1 extends AppCompatActivity {
     //https://www.youtube.com/watch?v=GffXwcH2-g8&ab_channel=SmallAcademy
     private ViewPager viewPager;
-    private MyViewPagerAdapter myViewPagerAdapter;
     private LinearLayout dotsLayout;
-    private TextView[] dots;
     private int[] layouts;
     private Button btnSkip, btnNext;
     private SP_FirstStartManager SPFirstStartManager;
@@ -67,35 +64,27 @@ public class CarouselActivity_1 extends AppCompatActivity {
         // making notification bar transparent
         changeStatusBarColor();
 
-        myViewPagerAdapter = new MyViewPagerAdapter();
+        MyViewPagerAdapter myViewPagerAdapter = new MyViewPagerAdapter();
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
-        btnSkip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchHomeScreen();
-            }
-        });
+        btnSkip.setOnClickListener(v -> launchHomeScreen());
 
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // checking for last page
-                // if last page home screen will be launched
-                int current = getItem(+1);
-                if (current < layouts.length) {
-                    // move to next screen
-                    viewPager.setCurrentItem(current);
-                } else {
-                    launchHomeScreen();
-                }
+        btnNext.setOnClickListener(v -> {
+            // checking for last page
+            // if last page home screen will be launched
+            int current = getItem();
+            if (current < layouts.length) {
+                // move to next screen
+                viewPager.setCurrentItem(current);
+            } else {
+                launchHomeScreen();
             }
         });
     }
 
     private void addBottomDots(int currentPage) {
-        dots = new TextView[layouts.length];
+        TextView[] dots = new TextView[layouts.length];
 
         int[] colorsActive = getResources().getIntArray(R.array.array_dot_active);
         int[] colorsInactive = getResources().getIntArray(R.array.array_dot_inactive);
@@ -113,8 +102,8 @@ public class CarouselActivity_1 extends AppCompatActivity {
             dots[currentPage].setTextColor(colorsActive[currentPage]);
     }
 
-    private int getItem(int i) {
-        return viewPager.getCurrentItem() + i;
+    private int getItem() {
+        return viewPager.getCurrentItem() + 1;
     }
 
     private void launchHomeScreen() {
@@ -122,15 +111,13 @@ public class CarouselActivity_1 extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         SPFirstStartManager.setFirstTimeLaunch(false);
-        /////
 
         if (auth.getCurrentUser() == null) {
             startActivity(new Intent(CarouselActivity_1.this, P_D_Select_Activity_2.class));
-            finish();
         } else {
             startActivity(new Intent(CarouselActivity_1.this, HomeActivity_5.class));
-            finish();
         }
+        finish();
     }
 
     //  viewpager change listener
@@ -167,25 +154,22 @@ public class CarouselActivity_1 extends AppCompatActivity {
      * Making notification bar transparent
      */
     private void changeStatusBarColor() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-        }
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Color.TRANSPARENT);
     }
 
     /**
      * View pager adapter
      */
     public class MyViewPagerAdapter extends PagerAdapter {
-        private LayoutInflater layoutInflater;
 
         public MyViewPagerAdapter() {
         }
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);

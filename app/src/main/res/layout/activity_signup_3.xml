@@ -11,7 +11,7 @@
         android:id="@+id/login_back_button"
         android:layout_width="@dimen/_52sdp"
         android:layout_height="@dimen/_50sdp"
-        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:padding="5dp"
         android:src="@drawable/general_back_button" />
@@ -61,11 +61,11 @@
                 android:id="@+id/reg_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/spartan_regular"
                 android:background="@color/white"
+                android:fontFamily="@font/spartan_regular"
                 android:hint="@string/name_hint_in_registration"
                 android:textColor="@color/black"
-                android:textColorHint="@color/white"
+                android:textColorHint="#757575"
 
                 />
 
@@ -86,12 +86,12 @@
                 android:id="@+id/reg_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:fontFamily="@font/spartan_regular"
                 android:hint="@string/email_address_in_login"
-                android:background="@color/white"
 
                 android:textColor="@color/black"
-                android:textColorHint="@color/white" />
+                android:textColorHint="#757575" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,13 +110,13 @@
                 android:id="@+id/reg_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:fontFamily="@font/spartan_regular"
                 android:hint="@string/email_password_hint_in_registration"
                 android:inputType="textPassword"
-                android:background="@color/white"
 
                 android:textColor="@color/black"
-                android:textColorHint="@color/white"
+                android:textColorHint="#757575"
 
                 />
 
@@ -137,13 +137,13 @@
                 android:id="@+id/reg_cPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:fontFamily="@font/spartan_regular"
                 android:hint="@string/email_confirm_password_hint_in_registration"
-                android:background="@color/white"
 
                 android:inputType="textPassword"
                 android:textColor="@color/black"
-                android:textColorHint="@color/white"
+                android:textColorHint="#757575"
 
                 />
 
@@ -187,7 +187,5 @@
             android:textStyle="bold"/>
 
     </LinearLayout>
-
-
 
 </RelativeLayout>
