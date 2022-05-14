@@ -20,6 +20,6 @@ public class SplashActivity_0 extends AppCompatActivity {
             Intent i = new Intent(SplashActivity_0.this, CarouselActivity_1.class);
             startActivity(i);
             finish();
-        }, 3000);
+        }, 3500);
     }
 }

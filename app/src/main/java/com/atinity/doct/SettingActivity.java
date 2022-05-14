@@ -7,14 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,20 +19,23 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SettingActivity extends AppCompatActivity {
 
 
+    ImageView save;
     CircleImageView setting_image;
     EditText setting_name, setting_status;
+
     FirebaseAuth auth;
     FirebaseDatabase database;
     FirebaseStorage storage;
-    ImageView save;
+
     Uri selectedImageUri;
 
     String email;
@@ -56,17 +55,18 @@ public class SettingActivity extends AppCompatActivity {
 
         save = findViewById(R.id.save);
 
-        DatabaseReference reference = database.getReference().child("user").child(auth.getUid());
+        DatabaseReference reference = database.getReference().child("user").child(Objects.requireNonNull(auth.getUid()));
         StorageReference storageReference = storage.getReference().child("upload").child(auth.getUid());
 
-
+        // 1st => accessing objects of users from realtime_database
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                email = snapshot.child("email").getValue().toString();
-                String name = snapshot.child("name").getValue().toString();
-                String status = snapshot.child("status").getValue().toString();
-                String image = snapshot.child("imageUrl").getValue().toString();
+
+                email = Objects.requireNonNull(snapshot.child("email").getValue()).toString();
+                String name = Objects.requireNonNull(snapshot.child("name").getValue()).toString();
+                String status = Objects.requireNonNull(snapshot.child("status").getValue()).toString();
+                String image = Objects.requireNonNull(snapshot.child("imageUrl").getValue()).toString();
 
                 setting_name.setText(name);
                 setting_status.setText(status);
@@ -75,77 +75,58 @@ public class SettingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError error) { }
         });
 
-        setting_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 10);
-            }
+        // => to open gallery
+        setting_image.setOnClickListener(view -> {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), 10);
         });
 
 
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        save.setOnClickListener(view -> {
 
-                String name = setting_name.getText().toString();
-                String status = setting_status.getText().toString();
+            String name = setting_name.getText().toString();
+            String status = setting_status.getText().toString();
 
-                if (selectedImageUri != null) {
-                    storageReference.putFile(selectedImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    String finalImageUri = uri.toString();
-                                    Users users = new Users(name, email, finalImageUri, auth.getUid(), status);
 
-                                    reference.setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful()) {
-                                                Toast.makeText(SettingActivity.this, "Data Successfully Updated", Toast.LENGTH_SHORT).show();
-                                                startActivity(new Intent(SettingActivity.this, HomeActivity_5.class));
-                                            }
-                                            else {
-                                                Toast.makeText(SettingActivity.this, "Something went wrong, try again", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    });
-                } else {
-                    storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
+            if (selectedImageUri != null) {
+                storageReference.putFile(selectedImageUri).addOnCompleteListener(task ->
+                        storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
+
                             String finalImageUri = uri.toString();
                             Users users = new Users(name, email, finalImageUri, auth.getUid(), status);
 
-                            reference.setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()) {
-                                        Toast.makeText(SettingActivity.this, "Data Successfully Updated", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(SettingActivity.this, HomeActivity_5.class));
-                                    }
-                                    else {
-                                        Toast.makeText(SettingActivity.this, "Something went wrong, try again", Toast.LENGTH_SHORT).show();
-                                    }
+                            reference.setValue(users).addOnCompleteListener(task1 -> {
+                                if(task1.isSuccessful()) {
+                                    Toast.makeText(SettingActivity.this, "Data Successfully Updated", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(SettingActivity.this, HomeActivity_5.class));
+                                }
+                                else {
+                                    Toast.makeText(SettingActivity.this, "Something went wrong, try again", Toast.LENGTH_SHORT).show();
                                 }
                             });
+                }));
+            } else {
+
+                // download previous image and pass it to realtime_database
+                storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                    String finalImageUri = uri.toString();
+                    Users users = new Users(name, email, finalImageUri, auth.getUid(), status);
+
+                    reference.setValue(users).addOnCompleteListener(task -> {
+                        if(task.isSuccessful()) {
+                            Toast.makeText(SettingActivity.this, "Data Successfully Updated", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(SettingActivity.this, HomeActivity_5.class));
+                        }
+                        else {
+                            Toast.makeText(SettingActivity.this, "Something went wrong, try again", Toast.LENGTH_SHORT).show();
                         }
                     });
-                }
+                });
             }
         });
 
@@ -156,8 +137,8 @@ public class SettingActivity extends AppCompatActivity {
 
             if(requestCode == 10) {
                 if(data != null) {
-                    selectedImageUri = data.getData();
-                    setting_image.setImageURI(selectedImageUri);
+                    selectedImageUri = data.getData(); // we pass it into storage
+                    setting_image.setImageURI(selectedImageUri); // we pass into picasso
                 }
             }
         }

@@ -7,23 +7,41 @@ public class Users {
     String imageUrl;
     String uid;
     String status;
+    String Domain;
 
 
-    public Users() { }
+    // Why we need empty constructor
+    public Users() {
+        // Default constructor required for calls to DataSnapshot.getValue(User.class)
+    }
 
-    public Users(String n, String e, String i, String id, String s) {
-//        this.name = name;
-//        this.email = email;
-//        this.imageUrl = imageUrl;
-//        this.uid = uid;
-//        this.status = status;
+    public String getDomain() {
+        return Domain;
+    }
+
+    public void setDomain(String domain) {
+        Domain = domain;
+    }
+
+    public Users(String n, String e, String i, String id, String s, String domain) {
 
         this.name = n;
         this.email = e;
         this.imageUrl = i;
         this.uid = id;
         this.status = s;
+        this.Domain=domain;
     }
+   public Users(String name,String email, String finalImageUri,String id,String status)
+    {
+        this.name = name;
+        this.email = email;
+        this.imageUrl = finalImageUri;
+        this.uid = id;
+        this.status = status;
+
+    }
+
 
     public String getName() {
         return this.name;

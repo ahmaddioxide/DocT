@@ -3,30 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F3FFFD"
     tools:context=".HomeActivity_5">
 
     <LinearLayout
-        android:layout_width="match_parent"
         android:id="@+id/toolBar"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
-        android:orientation="horizontal"
-        android:background="@color/teal_200"
-        android:gravity="center" >
+        android:background="#3FCBE4"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
             android:layout_weight="1"
             android:text="@string/app_name"
-            android:textColor="#546E7A"
+            android:textStyle="bold"
+            android:textColor="@color/black"
             android:textSize="@dimen/_20sdp" />
 
         <ImageView
             android:id="@+id/img_setting"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
             android:layout_gravity="center"
             android:layout_marginEnd="@dimen/_10sdp"
             android:background="@drawable/setting_icon"
@@ -34,21 +37,23 @@
 
         <ImageView
             android:id="@+id/img_logOut"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:background="@drawable/logout_icon"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_gravity="center"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:layout_gravity="center" />
+            android:background="@drawable/logout_icon" />
 
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_margin="@dimen/_10sdp"
         android:id="@+id/mainUserRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolBar"
-        android:layout_marginTop="@dimen/_50sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:padding="@dimen/_20sdp" />
 
 </RelativeLayout>

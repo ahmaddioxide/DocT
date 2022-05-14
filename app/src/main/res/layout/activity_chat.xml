@@ -37,11 +37,8 @@
 
             />
 
-
-
-
-
     </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_below="@+id/ll1"

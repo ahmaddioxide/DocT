@@ -6,24 +6,20 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".SignupActivity_3">
+<!--    android:padding="30dp"-->
 
-    <ImageView
-        android:id="@+id/login_back_button"
-        android:layout_width="@dimen/_52sdp"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:padding="5dp"
-        android:src="@drawable/general_back_button" />
-
+<!--        android:layout_margin="@dimen/_20sdp"-->
+<!--        android:layout_marginBottom="@dimen/_10sdp"-->
+<!--        android:layout_marginTop="@dimen/_10sdp"-->
+<!--        android:layout_marginEnd="@dimen/_20sdp"-->
     <LinearLayout
-
+        android:layout_marginStart="@dimen/_40sdp"
+        android:id="@+id/give_us_a_review_landmine_main_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/_10sdp">
+        android:orientation="vertical">
 
 
         <TextView
@@ -44,6 +40,12 @@
             android:src="@drawable/female_doctor_avatar"
             app:civ_border_color="#FF000000"
             app:civ_border_width="2dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Select Your Image" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox.Dense"
@@ -155,36 +157,40 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:background="@drawable/shapelogin"
-            android:text="@string/signup_in_registration" />
+            android:text="@string/signup_in_registration"
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/give_us_a_review_landmine_main_layout"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:fontFamily="@font/spartan_regular"
+            android:gravity="center"
             android:text="@string/already_account_in_registration"
             android:textColor="@color/black"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:textSize="@dimen/_14sdp" />
+            android:textSize="@dimen/_12sdp" />
 
         <TextView
             android:id="@+id/txt_signin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/spartan_regular"
-            android:text="@string/signin_in_registration"
             android:layout_marginBottom="@dimen/_11sdp"
+            android:fontFamily="@font/spartan_regular"
+            android:gravity="center"
+            android:text="@string/signin_in_registration"
             android:textColor="@color/black"
-            android:textSize="@dimen/_20sdp"
-            android:textStyle="bold"/>
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

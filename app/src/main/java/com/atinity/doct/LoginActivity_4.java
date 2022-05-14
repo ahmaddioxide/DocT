@@ -18,7 +18,6 @@ public class LoginActivity_4 extends AppCompatActivity {
     TextView txt_signup, signIn_btn;
     EditText login_email, login_password;
 
-    ImageView back_btn;
     FirebaseAuth auth;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
@@ -34,14 +33,11 @@ public class LoginActivity_4 extends AppCompatActivity {
         signIn_btn = findViewById(R.id.signin_btn);
         login_email = findViewById(R.id.login_email);
         login_password = findViewById(R.id.login_password);
-        back_btn=findViewById(R.id.login_back_button);
 
-        // click listener on Sign In Button
+
         signIn_btn.setOnClickListener(view -> {
 
-            // taking value from user in edit text and assigning its value below
-            // then these email and password values are check by Firebase.signInWithEmailAndPassword
-            // if user exist in database, we are successfully login.
+
             String email = login_email.getText().toString();
             String password = login_password.getText().toString();
 
@@ -55,10 +51,8 @@ public class LoginActivity_4 extends AppCompatActivity {
                 Toast.makeText(LoginActivity_4.this, "Password is too short", Toast.LENGTH_SHORT).show();
             } else {
 
-                //
-                //
-                //
 
+               // 1st => checking credentials
                 auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                     if(task.isSuccessful()) {
                         Intent i = new Intent(LoginActivity_4.this, HomeActivity_5.class);
@@ -70,12 +64,7 @@ public class LoginActivity_4 extends AppCompatActivity {
             }
         });
 
-
         txt_signup.setOnClickListener(view -> startActivity(new Intent(LoginActivity_4.this, SignupActivity_3.class)));
 
-        back_btn.setOnClickListener(view -> {
-            startActivity(new Intent(getApplicationContext(),SignupActivity_3.class));
-            finish();
-        });
     }
 }

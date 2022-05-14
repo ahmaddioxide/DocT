@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -35,12 +37,18 @@ public class HomeActivity_5 extends AppCompatActivity {
     // taking data from firebase
     FirebaseDatabase database;
 
+    static String SPName="PatOrDoc";
+    static String keyName="P_or_D";
+    SharedPreferences SP;
+    static String P_or_D;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_5);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        SP=getSharedPreferences(SPName,MODE_PRIVATE);
+        P_or_D=SP.getString(keyName,null);
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
@@ -54,7 +62,20 @@ public class HomeActivity_5 extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()) {
                     Users users = dataSnapshot.getValue(Users.class);
-                    usersArrayList.add(users);
+                    if (P_or_D.equals("patient")) {
+                        Log.d("Result of P_O_D", P_or_D);
+                        if (users.getDomain().equals("doctor")) {
+                            usersArrayList.add(users);
+                        }
+                    }
+                    if(P_or_D.equals("doctor"))
+                    {
+                        Log.d("Result of P_O_D", P_or_D);
+
+                        if (users.getDomain().equals("patient")) {
+                            usersArrayList.add(users);
+                        }
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -67,10 +88,10 @@ public class HomeActivity_5 extends AppCompatActivity {
 
         mainUserRecyclerView = findViewById(R.id.mainUserRecyclerView);
         mainUserRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mainUserRecyclerView.setAdapter(adapter);
         adapter = new UserAdapter(HomeActivity_5.this, usersArrayList);
+        mainUserRecyclerView.setAdapter(adapter);
 
-        // 9
+
         imgSetting = findViewById(R.id.img_setting);
 
         imglogOut.setOnClickListener(view -> {
@@ -85,24 +106,16 @@ public class HomeActivity_5 extends AppCompatActivity {
 
             yesBtn.setOnClickListener(view1 -> {
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(HomeActivity_5.this, SignupActivity_3.class));
+                startActivity(new Intent(HomeActivity_5.this, P_D_Select_Activity_2.class));
             });
 
             noBtn.setOnClickListener(view12 -> dialog.dismiss());
-
-
             dialog.show();
 
         });
 
 
-        // 9
-        imgSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(HomeActivity_5.this, SettingActivity.class));
-            }
-        });
-
+        imgSetting.setOnClickListener(view ->
+                startActivity(new Intent(HomeActivity_5.this, SettingActivity.class)));
     }
 }

@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -24,24 +25,27 @@ public class MessagesAdapter extends RecyclerView.Adapter {
     int ITEM_SEND = 1;
     int ITEM_RECEIVER = 1;
 
-    ChatActivity temp = new ChatActivity();
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        if (viewType == ITEM_SEND) {
+        if (viewType == ITEM_SEND)
+        {
             View view = LayoutInflater.from(context).inflate(R.layout.sender_layout_item, parent, false);
             return new SenderViewHolder(view);
 
-        } else {
-
+        }
+        else if (viewType == ITEM_RECEIVER)
+        {
             View view = LayoutInflater.from(context).inflate(R.layout.receiver_layout_item, parent, false);
             return new ReceiverViewHolder(view);
 
+        } else {
+            return null;
         }
-
     }
+
+
 
     public MessagesAdapter(Context context, ArrayList<Messages> messagesArrayList) {
         this.context = context;
@@ -74,7 +78,7 @@ public class MessagesAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         Messages messages = messagesArrayList.get(position);
-        if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals(messages.getSenderID())) {
+        if (Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid().equals(messages.getSenderID())) {
             return ITEM_SEND;
         } else {
             return ITEM_RECEIVER;

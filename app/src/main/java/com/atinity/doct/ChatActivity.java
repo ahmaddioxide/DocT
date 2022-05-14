@@ -8,13 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -55,7 +52,7 @@ public class ChatActivity extends AppCompatActivity {
     String senderRoom, receiverRoom;
 
     RecyclerView messageAdapter;
-    ArrayList<Messages> messagesArrayList;
+    ArrayList<Messages> messagesArrayList = new ArrayList<>();
 
     MessagesAdapter adapter;
 
@@ -112,9 +109,7 @@ public class ChatActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError error) { }
         });
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -145,22 +140,9 @@ public class ChatActivity extends AppCompatActivity {
 
             database = FirebaseDatabase.getInstance();
             database.getReference().child("chats").child(senderRoom).child("messages").push()
-                    .setValue(messages).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    database.getReference().child("chats").child(receiverRoom).child("messages").push()
-                            .setValue(messages).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-
-                        }
-                    });
-                }
-            });
-
-
+                    .setValue(messages).addOnCompleteListener(task ->
+                            database.getReference().child("chats").child(receiverRoom).child("messages").push()
+                            .setValue(messages).addOnCompleteListener(task1 -> {}));
         });
-
-
     }
 }
