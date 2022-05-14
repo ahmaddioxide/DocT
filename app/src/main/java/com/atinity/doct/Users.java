@@ -32,15 +32,6 @@ public class Users {
         this.status = s;
         this.Domain=domain;
     }
-   public Users(String name,String email, String finalImageUri,String id,String status)
-    {
-        this.name = name;
-        this.email = email;
-        this.imageUrl = finalImageUri;
-        this.uid = id;
-        this.status = status;
-
-    }
 
 
     public String getName() {

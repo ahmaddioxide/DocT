@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -40,10 +41,18 @@ public class SettingActivity extends AppCompatActivity {
 
     String email;
 
+    static String SPName="PatOrDoc";
+    static String keyName="P_or_D";
+    SharedPreferences SP;
+    static String P_or_D;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+        SP=getSharedPreferences(SPName,MODE_PRIVATE);
+        P_or_D=SP.getString(keyName,null);
+
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
@@ -67,7 +76,6 @@ public class SettingActivity extends AppCompatActivity {
                 String name = Objects.requireNonNull(snapshot.child("name").getValue()).toString();
                 String status = Objects.requireNonNull(snapshot.child("status").getValue()).toString();
                 String image = Objects.requireNonNull(snapshot.child("imageUrl").getValue()).toString();
-
                 setting_name.setText(name);
                 setting_status.setText(status);
 
@@ -98,7 +106,7 @@ public class SettingActivity extends AppCompatActivity {
                         storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
 
                             String finalImageUri = uri.toString();
-                            Users users = new Users(name, email, finalImageUri, auth.getUid(), status);
+                            Users users = new Users(name, email, finalImageUri, auth.getUid(), status,P_or_D);
 
                             reference.setValue(users).addOnCompleteListener(task1 -> {
                                 if(task1.isSuccessful()) {
@@ -115,7 +123,7 @@ public class SettingActivity extends AppCompatActivity {
                 // download previous image and pass it to realtime_database
                 storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
                     String finalImageUri = uri.toString();
-                    Users users = new Users(name, email, finalImageUri, auth.getUid(), status);
+                    Users users = new Users(name, email, finalImageUri, auth.getUid(), status,P_or_D);
 
                     reference.setValue(users).addOnCompleteListener(task -> {
                         if(task.isSuccessful()) {
