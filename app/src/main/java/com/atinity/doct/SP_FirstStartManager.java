@@ -3,9 +3,7 @@ package com.atinity.doct;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-/**
- * Created by Lincoln on 05/05/16.
- */
+
 public class SP_FirstStartManager {
     SharedPreferences pref;
     SharedPreferences.Editor editor;

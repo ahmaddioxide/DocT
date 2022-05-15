@@ -21,7 +21,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class CarouselActivity_1 extends AppCompatActivity {
-    //https://www.youtube.com/watch?v=GffXwcH2-g8&ab_channel=SmallAcademy
     private ViewPager viewPager;
     private LinearLayout dotsLayout;
     private int[] layouts;

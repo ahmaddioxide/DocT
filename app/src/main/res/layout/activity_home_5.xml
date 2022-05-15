@@ -44,25 +44,29 @@
             android:background="@drawable/logout_icon" />
 
     </LinearLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_470sdp"
+    android:id="@+id/mainUserRecyclerViewLayout"
+    android:layout_below="@id/toolBar">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mainUserRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolBar"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_50sdp"
         android:padding="@dimen/_20sdp" />
+</RelativeLayout>
     <Button
         android:id="@+id/gotoMapsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolBar"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="635dp"
+        android:layout_below="@+id/mainUserRecyclerViewLayout"
         android:background="@drawable/shapelogin"
+        android:layout_centerInParent="true"
         android:onClick="goTOMaps"
         android:text="Emergency"
         android:textSize="11sp" />
