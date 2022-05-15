@@ -23,7 +23,7 @@ public class MessagesAdapter extends RecyclerView.Adapter {
     ArrayList<Messages> messagesArrayList;
 
     int ITEM_SEND = 1;
-    int ITEM_RECEIVER = 1;
+    int ITEM_RECEIVER = 2;
 
     @NonNull
     @Override

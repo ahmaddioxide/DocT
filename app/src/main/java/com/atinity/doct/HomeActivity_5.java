@@ -118,4 +118,9 @@ public class HomeActivity_5 extends AppCompatActivity {
         imgSetting.setOnClickListener(view ->
                 startActivity(new Intent(HomeActivity_5.this, SettingActivity.class)));
     }
+
+    public  void goTOMaps(View view)
+    {
+        startActivity(new Intent(this.getApplicationContext(),MapsActivity_6.class));
+    }
 }
