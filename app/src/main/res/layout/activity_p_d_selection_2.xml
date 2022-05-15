@@ -43,6 +43,7 @@
             android:fontFamily="@font/spartan_regular"
             android:text="Select your Domain"
             android:textSize="@dimen/_15sdp"
+            android:textStyle="bold"
             android:textAlignment="center"
             android:textColor="@color/black" />
 
