@@ -62,7 +62,7 @@
         android:layout_marginLeft="@dimen/_50sdp"
         android:textSize="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_20sdp"
-        android:text="Change Status"
+        android:text="Write About You"
         />
 
     <EditText
@@ -75,7 +75,7 @@
         android:textStyle="normal"
         android:background="@null"
         android:fontFamily="@font/spartan_bold"
-        android:text="Hello friend, wanna try me"
+        android:text="Hello friend, wanna try me?"
         android:importantForAutofill="no"
         android:inputType="text"/>
 

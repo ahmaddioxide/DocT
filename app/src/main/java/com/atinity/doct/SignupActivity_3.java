@@ -84,7 +84,18 @@ public class SignupActivity_3 extends AppCompatActivity {
             String email = reg_email.getText().toString();
             String password = reg_pass.getText().toString();
             String cPassword = reg_cPass.getText().toString();
-            String status = "Hey there You need help!";
+            String status;
+            if (P_or_D.equals("patient")) {
+                status = "I am a patient";
+            }
+            else if (P_or_D.equals("doctor"))
+            {
+                status = "I am a doctor";
+            }
+            else
+            {
+                status="I am nothing";
+            }
 
             // checking validation
             if(TextUtils.isEmpty(name) || TextUtils.isEmpty(email) ||

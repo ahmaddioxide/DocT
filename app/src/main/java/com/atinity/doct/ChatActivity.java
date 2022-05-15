@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ public class ChatActivity extends AppCompatActivity {
 
     public static String sImage;
     public static String rImage;
+    private Parcelable recyclerViewState;
 
     public static String getsImage() {
         return sImage;
@@ -63,7 +65,6 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         database = FirebaseDatabase.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -91,9 +92,14 @@ public class ChatActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true); // layout work in reverse order
 
+
         messageAdapter.setLayoutManager(linearLayoutManager);
 
         adapter = new MessagesAdapter(ChatActivity.this, messagesArrayList);
+        adapter.notifyDataSetChanged();
+        messageAdapter.scrollToPosition(messagesArrayList.size() - 1);
+
+
         messageAdapter.setAdapter(adapter);
 
 
@@ -102,12 +108,17 @@ public class ChatActivity extends AppCompatActivity {
 
         chatReference.addValueEventListener(new ValueEventListener() {
             @Override
+
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()) {
                     Messages messages = dataSnapshot.getValue(Messages.class);
                     messagesArrayList.add(messages);
                 }
+
                 adapter.notifyDataSetChanged();
+                linearLayoutManager.getReverseLayout();
+                messageAdapter.scrollToPosition(messagesArrayList.size() - 1);
+
             }
 
             @Override
@@ -133,6 +144,9 @@ public class ChatActivity extends AppCompatActivity {
             if(message.isEmpty()) {
                         Toast.makeText(ChatActivity.this, "Enter some message", Toast.LENGTH_SHORT).show();
                 return;
+
+
+
             }
 
             editMessage.setText("");
@@ -145,6 +159,7 @@ public class ChatActivity extends AppCompatActivity {
                     .setValue(messages).addOnCompleteListener(task ->
                             database.getReference().child("chats").child(receiverRoom).child("messages").push()
                             .setValue(messages).addOnCompleteListener(task1 -> {}));
+
         });
     }
 }

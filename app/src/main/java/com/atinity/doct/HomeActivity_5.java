@@ -78,6 +78,7 @@ public class HomeActivity_5 extends AppCompatActivity {
                     }
                 }
                 adapter.notifyDataSetChanged();
+                mainUserRecyclerView.scrollToPosition(usersArrayList.size() - 1);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

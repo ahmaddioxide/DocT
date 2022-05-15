@@ -60,13 +60,15 @@
         android:layout_marginBottom="@dimen/_50sdp"
         android:padding="@dimen/_20sdp" />
 </RelativeLayout>
+
     <Button
         android:id="@+id/gotoMapsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/mainUserRecyclerViewLayout"
-        android:background="@drawable/shapelogin"
         android:layout_centerInParent="true"
+        android:background="@drawable/shapelogin"
+        android:layout_alignBaseline="@+id/mainUserRecyclerViewLayout"
         android:onClick="goTOMaps"
         android:text="Emergency"
         android:textSize="11sp" />
